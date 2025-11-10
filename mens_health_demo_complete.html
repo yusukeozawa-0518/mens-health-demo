@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>男性更年期ケアサービス - デモ</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body class="bg-neutral-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Lucide Iconsの代替（簡易SVGアイコン）
+        const TestTube = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+        );
+
+        const ClipboardCheck = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+        );
+
+        const Pill = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+        );
+
+        const Video = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+        );
+
+        const Calendar = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+        );
+
+        const ArrowLeft = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+        );
+
+        const MensHealthDemo = () => {
+            const [currentPage, setCurrentPage] = useState('home');
+
+            // トップページ
+            const HomePage = () => (
+                <div className="min-h-screen bg-neutral-50">
+                    {/* ヒーローセクション */}
+                    <div className="bg-gradient-to-b from-stone-100 to-neutral-50 py-20 px-8">
+                        <div className="max-w-6xl mx-auto text-center">
+                            <p className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-4">Modern Men's Health</p>
+                            <h1 className="text-5xl font-light text-neutral-900 mb-6 tracking-tight">
+                                男性更年期ケアサービス
+                            </h1>
+                            <p className="text-xl text-neutral-600 font-light max-w-2xl mx-auto leading-relaxed">
+                                血液検査とAMSスコアで、男性更年期を科学的にケア。<br/>自宅で始める、新しい健康習慣。
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* メインコンテンツ */}
+                    <div className="max-w-6xl mx-auto px-8 py-16">
+                        {/* 上段：検査セクション */}
+                        <div className="mb-20">
+                            <h2 className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-8">Check Your Health</h2>
+                            <div className="grid grid-cols-3 gap-6">
+                                {/* TASSO */}
+                                <div 
+                                    onClick={() => setCurrentPage('tasso')}
+                                    className="group cursor-pointer"
+                                >
+                                    <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 h-full">
+                                        <div className="aspect-[4/3] bg-gradient-to-br from-rose-100 to-orange-50 flex items-center justify-center">
+                                            <TestTube className="w-20 h-20 text-rose-400 group-hover:scale-110 transition-transform duration-500" />
+                                        </div>
+                                        <div className="p-8">
+                                            <h3 className="text-2xl font-medium text-neutral-900 mb-3">TASSO血液検査</h3>
+                                            <p className="text-neutral-600 leading-relaxed mb-4 font-light">
+                                                自宅で簡単。テストステロン値を正確に測定し、あなたの健康状態を可視化します。
+                                            </p>
+                                            <div className="flex items-center text-neutral-900 font-medium group-hover:translate-x-2 transition-transform">
+                                                <span>デモを見る</span>
+                                                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* AMS */}
+                                <div 
+                                    onClick={() => setCurrentPage('ams')}
+                                    className="group cursor-pointer"
+                                >
+                                    <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 h-full">
+                                        <div className="aspect-[4/3] bg-gradient-to-br from-emerald-100 to-teal-50 flex items-center justify-center">
+                                            <ClipboardCheck className="w-20 h-20 text-emerald-400 group-hover:scale-110 transition-transform duration-500" />
+                                        </div>
+                                        <div className="p-8">
+                                            <h3 className="text-2xl font-medium text-neutral-900 mb-3">AMSスコアテスト</h3>
+                                            <p className="text-neutral-600 leading-relaxed mb-4 font-light">
+                                                17の質問で、あなたの症状を客観的に評価。数分で完了する簡易チェック。
+                                            </p>
+                                            <div className="flex items-center text-neutral-900 font-medium group-hover:translate-x-2 transition-transform">
+                                                <span>体験する</span>
+                                                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* スクリーニング */}
+                                <div 
+                                    onClick={() => setCurrentPage('screening')}
+                                    className="group cursor-pointer"
+                                >
+                                    <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 h-full border-2 border-amber-300">
+                                        <div className="aspect-[4/3] bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center">
+                                            <ClipboardCheck className="w-20 h-20 text-white group-hover:scale-110 transition-transform duration-500" />
+                                        </div>
+                                        <div className="p-8">
+                                            <h3 className="text-2xl font-medium text-neutral-900 mb-3">総合スクリーニング</h3>
+                                            <p className="text-neutral-600 leading-relaxed mb-4 font-light">
+                                                血液検査とAMSスコアを統合。あなただけの健康レポートを作成します。
+                                            </p>
+                                            <div className="flex items-center text-neutral-900 font-medium group-hover:translate-x-2 transition-transform">
+                                                <span>結果を見る</span>
+                                                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 下段：ケアセクション */}
+                        <div>
+                            <h2 className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-8">Your Care Plan</h2>
+                            <div className="grid grid-cols-2 gap-6">
+                                {/* セルフケア */}
+                                <div 
+                                    onClick={() => setCurrentPage('selfcare')}
+                                    className="group cursor-pointer"
+                                >
+                                    <div className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-all duration-500 h-full flex items-center">
+                                        <div className="flex-shrink-0 mr-8">
+                                            <div className="w-24 h-24 bg-violet-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                                                <Pill className="w-12 h-12 text-violet-600" />
+                                            </div>
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-2xl font-medium text-neutral-900 mb-3">セルフメディケーション</h3>
+                                            <p className="text-neutral-600 leading-relaxed mb-4 font-light">
+                                                生活習慣、運動、サプリメント。あなたに合わせたケアプランをご提案。
+                                            </p>
+                                            <div className="flex items-center text-neutral-900 font-medium group-hover:translate-x-2 transition-transform">
+                                                <span>プランを見る</span>
+                                                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* オンライン診療 */}
+                                <div 
+                                    onClick={() => setCurrentPage('online')}
+                                    className="group cursor-pointer"
+                                >
+                                    <div className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-all duration-500 h-full flex items-center">
+                                        <div className="flex-shrink-0 mr-8">
+                                            <div className="w-24 h-24 bg-sky-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                                                <Calendar className="w-12 h-12 text-sky-600" />
+                                            </div>
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-2xl font-medium text-neutral-900 mb-3">オンライン診療</h3>
+                                            <p className="text-neutral-600 leading-relaxed mb-4 font-light">
+                                                専門医とビデオ通話で相談。自宅から始める、新しい医療体験。
+                                            </p>
+                                            <div className="flex items-center text-neutral-900 font-medium group-hover:translate-x-2 transition-transform">
+                                                <span>詳しく見る</span>
+                                                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* フッター */}
+                    <div className="max-w-6xl mx-auto px-8 py-12 text-center">
+                        <p className="text-sm text-neutral-400 font-light">※ このデモは展示用のプロトタイプです</p>
+                    </div>
+                </div>
+            );
+
+            // TASSページ（省略版 - 長さの関係で簡略化）
+            const TassoPage = () => (
+                <div className="min-h-screen bg-neutral-50">
+                    <div className="max-w-5xl mx-auto px-8 py-12">
+                        <button 
+                            onClick={() => setCurrentPage('home')}
+                            className="flex items-center text-neutral-600 hover:text-neutral-900 mb-12 transition-colors group"
+                        >
+                            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+                            <span className="font-light">戻る</span>
+                        </button>
+
+                        <div className="text-center mb-16">
+                            <p className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-4">Blood Test</p>
+                            <h1 className="text-5xl font-light text-neutral-900 mb-6 tracking-tight">TASSO血液検査</h1>
+                            <p className="text-xl text-neutral-600 font-light">自宅で、簡単に、正確に</p>
+                        </div>
+
+                        {/* Vimeo動画 */}
+                        <div className="bg-white rounded-3xl p-8 mb-12 shadow-sm">
+                            <div className="aspect-video rounded-2xl overflow-hidden bg-neutral-900">
+                                <iframe 
+                                    src="https://player.vimeo.com/video/1116181616?h=0&title=0&byline=0&portrait=0" 
+                                    style={{width: '100%', height: '100%'}}
+                                    frameBorder="0" 
+                                    allow="autoplay; fullscreen; picture-in-picture" 
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                            <p className="text-sm text-neutral-500 text-center mt-4 font-light">
+                                TASSO血液検査の使い方をご覧ください
+                            </p>
+                        </div>
+
+                        {/* TASSOとは */}
+                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-10 mb-12 border border-blue-100">
+                            <h2 className="text-3xl font-medium text-neutral-900 mb-6">TASSOとは？</h2>
+                            <p className="text-neutral-700 leading-relaxed font-light text-lg mb-6">
+                                TASSOは、アメリカで開発された革新的な自己採血デバイスです。
+                                従来の指先穿刺とは異なり、上腕部から安全かつ簡単に血液を採取できる画期的な技術を採用しています。
+                            </p>
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="bg-white rounded-2xl p-6">
+                                    <h3 className="font-semibold text-neutral-900 mb-3 flex items-center">
+                                        <span className="text-2xl mr-3">🔬</span>
+                                        医療グレードの精度
+                                    </h3>
+                                    <p className="text-neutral-600 font-light text-sm">
+                                        病院での採血と同等の精度を実現。FDA承認済みの医療機器として認められています。
+                                    </p>
+                                </div>
+                                <div className="bg-white rounded-2xl p-6">
+                                    <h3 className="font-semibold text-neutral-900 mb-3 flex items-center">
+                                        <span className="text-2xl mr-3">💉</span>
+                                        痛みが少ない
+                                    </h3>
+                                    <p className="text-neutral-600 font-light text-sm">
+                                        上腕部の神経が少ない部位を使用するため、従来の指先穿刺よりも痛みを大幅に軽減。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 使い方の流れ */}
+                        <div className="bg-white rounded-3xl p-10 mb-12 shadow-sm">
+                            <h2 className="text-3xl font-medium text-neutral-900 mb-8 text-center">使い方は簡単3ステップ</h2>
+                            <div className="grid grid-cols-3 gap-8">
+                                <div className="text-center">
+                                    <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <span className="text-3xl">1️⃣</span>
+                                    </div>
+                                    <h3 className="text-xl font-medium text-neutral-900 mb-3">デバイスを装着</h3>
+                                    <p className="text-neutral-600 font-light">
+                                        上腕部にTASSOデバイスを装着します。専用のガイドに従って簡単に装着できます。
+                                    </p>
+                                </div>
+                                <div className="text-center">
+                                    <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <span className="text-3xl">2️⃣</span>
+                                    </div>
+                                    <h3 className="text-xl font-medium text-neutral-900 mb-3">ボタンを押す</h3>
+                                    <p className="text-neutral-600 font-light">
+                                        デバイスのボタンを押すだけ。自動的に必要量の血液が採取されます（約2分）。
+                                    </p>
+                                </div>
+                                <div className="text-center">
+                                    <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <span className="text-3xl">3️⃣</span>
+                                    </div>
+                                    <h3 className="text-xl font-medium text-neutral-900 mb-3">郵送する</h3>
+                                    <p className="text-neutral-600 font-light">
+                                        付属の返送用封筒に入れて、最寄りのポストに投函。完了です！
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 検査項目 */}
+                        <div className="bg-white rounded-3xl p-10 mb-12 shadow-sm border border-neutral-200">
+                            <h2 className="text-3xl font-medium text-neutral-900 mb-8">検査項目</h2>
+                            <p className="text-neutral-600 leading-relaxed font-light mb-6">
+                                男性更年期に関連する重要なホルモン値を包括的に測定します。
+                            </p>
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="bg-gradient-to-br from-rose-50 to-orange-50 rounded-xl p-6 border border-rose-200">
+                                    <h3 className="text-lg font-semibold text-neutral-900 mb-4">主要項目</h3>
+                                    <div className="space-y-3">
+                                        <div className="flex items-start">
+                                            <span className="text-rose-500 mr-3">●</span>
+                                            <div>
+                                                <p className="font-medium text-neutral-800">総テストステロン</p>
+                                                <p className="text-sm text-neutral-600 font-light">男性ホルモンの総量を測定</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start">
+                                            <span className="text-rose-500 mr-3">●</span>
+                                            <div>
+                                                <p className="font-medium text-neutral-800">遊離テストステロン</p>
+                                                <p className="text-sm text-neutral-600 font-light">実際に働いている活性型ホルモン</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start">
+                                            <span className="text-rose-500 mr-3">●</span>
+                                            <div>
+                                                <p className="font-medium text-neutral-800">DHEA-S</p>
+                                                <p className="text-sm text-neutral-600 font-light">副腎由来のホルモン前駆体</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+                                    <h3 className="text-lg font-semibold text-neutral-900 mb-4">追加項目</h3>
+                                    <div className="space-y-3">
+                                        <div className="flex items-start">
+                                            <span className="text-blue-500 mr-3">●</span>
+                                            <div>
+                                                <p className="font-medium text-neutral-800">コルチゾール</p>
+                                                <p className="text-sm text-neutral-600 font-light">ストレスホルモンのレベル</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start">
+                                            <span className="text-blue-500 mr-3">●</span>
+                                            <div>
+                                                <p className="font-medium text-neutral-800">PSA（前立腺特異抗原）</p>
+                                                <p className="text-sm text-neutral-600 font-light">前立腺の健康状態を確認</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start">
+                                            <span className="text-blue-500 mr-3">●</span>
+                                            <div>
+                                                <p className="font-medium text-neutral-800">ビタミンD</p>
+                                                <p className="text-sm text-neutral-600 font-light">骨の健康とホルモン代謝に重要</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 結果の受け取り */}
+                        <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 rounded-3xl p-10 text-white mb-12">
+                            <h2 className="text-3xl font-light mb-6">結果の受け取り</h2>
+                            <div className="grid grid-cols-3 gap-8">
+                                <div>
+                                    <div className="text-4xl mb-4">📧</div>
+                                    <h3 className="text-xl font-medium mb-2">メール通知</h3>
+                                    <p className="text-neutral-300 font-light text-sm">
+                                        検査完了後、メールで結果が届きます（通常5-7日）
+                                    </p>
+                                </div>
+                                <div>
+                                    <div className="text-4xl mb-4">📱</div>
+                                    <h3 className="text-xl font-medium mb-2">マイページ</h3>
+                                    <p className="text-neutral-300 font-light text-sm">
+                                        詳細な検査レポートをオンラインでいつでも確認可能
+                                    </p>
+                                </div>
+                                <div>
+                                    <div className="text-4xl mb-4">👨‍⚕️</div>
+                                    <h3 className="text-xl font-medium mb-2">医師の解説</h3>
+                                    <p className="text-neutral-300 font-light text-sm">
+                                        結果に基づいた医師からのコメント付き
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* よくある質問 */}
+                        <div className="bg-white rounded-3xl p-10 border border-neutral-200">
+                            <h2 className="text-3xl font-medium text-neutral-900 mb-8">よくある質問</h2>
+                            <div className="space-y-6">
+                                <div className="border-b border-neutral-100 pb-6">
+                                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">Q. 痛みはありますか？</h3>
+                                    <p className="text-neutral-600 font-light">
+                                        A. 従来の指先穿刺と比べて痛みは大幅に軽減されています。上腕部の神経が少ない部位を使用するため、ほとんどの方が「思ったより痛くない」と感じられます。
+                                    </p>
+                                </div>
+                                <div className="border-b border-neutral-100 pb-6">
+                                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">Q. どのくらいの血液が必要ですか？</h3>
+                                    <p className="text-neutral-600 font-light">
+                                        A. 約0.5mL（小さじ1/10程度）の血液で検査可能です。TASSOデバイスが自動的に必要量を採取します。
+                                    </p>
+                                </div>
+                                <div className="border-b border-neutral-100 pb-6">
+                                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">Q. 検査の精度は信頼できますか？</h3>
+                                    <p className="text-neutral-600 font-light">
+                                        A. はい。TASSOはFDA承認を取得した医療機器で、病院での静脈採血と同等の精度があることが検証されています。認定ラボで検査を実施します。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">Q. 検査キットの保管方法は？</h3>
+                                    <p className="text-neutral-600 font-light">
+                                        A. 室温で保管可能です。直射日光や高温多湿を避けて保管してください。使用期限はパッケージに記載されています。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            // AMSページ
+            const AmsPage = () => (
+                <div className="min-h-screen bg-neutral-50">
+                    <div className="max-w-5xl mx-auto px-8 py-12">
+                        <button 
+                            onClick={() => setCurrentPage('home')}
+                            className="flex items-center text-neutral-600 hover:text-neutral-900 mb-12 transition-colors group"
+                        >
+                            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+                            <span className="font-light">戻る</span>
+                        </button>
+
+                        <div className="text-center mb-16">
+                            <p className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-4">Symptom Check</p>
+                            <h1 className="text-5xl font-light text-neutral-900 mb-6 tracking-tight">AMSスコアテスト</h1>
+                            <p className="text-xl text-neutral-600 font-light">17の質問で、あなたの健康状態を評価</p>
+                        </div>
+
+                        <div className="bg-white rounded-3xl p-10 mb-12">
+                            <h3 className="text-2xl font-medium text-neutral-900 mb-4">AMSスコアとは？</h3>
+                            <p className="text-neutral-600 leading-relaxed font-light text-lg mb-6">
+                                Aging Males' Symptoms（AMS）スコアは、男性更年期障害の症状を評価するための国際的に標準化された質問票です。
+                                17の質問項目に5段階で回答し、合計スコアで症状の重症度を判定します。
+                            </p>
+                            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                <p className="text-sm text-neutral-700 font-light">
+                                    ※ 以下は体験版です。それぞれの症状について、過去1ヶ月間のあなたの状態に最も近いものを選択してください。
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* 質問リスト */}
+                        <div className="space-y-6 mb-12">
+                            {[
+                                { id: 1, question: '全般的な健康状態の低下（心身の健康状態、本人自身の感じ方）' },
+                                { id: 2, question: '関節や筋肉の痛み（腰痛、関節痛、手足の痛み、背中の痛み）' },
+                                { id: 3, question: 'ひどい発汗（思いがけず突然汗が出る、緊張や運動とは関係なくほてる）' },
+                                { id: 4, question: '睡眠の悩み（寝つきが悪い、ぐっすり眠れない、寝起きが早く疲れがとれない、浅い睡眠、眠れない）' },
+                                { id: 5, question: 'よく眠くなる、しばしば疲れを感じる' },
+                                { id: 6, question: 'いらいらする（当り散らす、些細なことにすぐ腹を立てる、不機嫌になる）' },
+                                { id: 7, question: '神経質になった（緊張しやすい、精神的に落ち着かない、じっとしていられない）' },
+                                { id: 8, question: '不安感（パニック状態になる）' },
+                                { id: 9, question: '体の疲労や行動力の減退（全般的な行動力の低下、活動の減少、余暇活動に興味がない、達成感がない、自分をせかさないと何もしない）' },
+                                { id: 10, question: '筋力の低下' },
+                                { id: 11, question: '憂うつな気分（落ち込み、悲しみ、涙もろい、意欲がわかない、気分のむら、無用感）' },
+                                { id: 12, question: '「絶頂期は過ぎた」と感じる' },
+                                { id: 13, question: '「力尽きた」「どん底にいる」と感じる' },
+                                { id: 14, question: 'ひげの伸びが遅くなった' },
+                                { id: 15, question: '性的能力の衰え' },
+                                { id: 16, question: '早朝勃起（朝立ち）の回数の減少' },
+                                { id: 17, question: '性欲の低下（性行為の機会の減少、性的欲求の減退）' }
+                            ].map((item) => (
+                                <div key={item.id} className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-100">
+                                    <div className="mb-4">
+                                        <span className="inline-block bg-neutral-100 text-neutral-700 text-sm font-medium px-3 py-1 rounded-full mb-3">
+                                            質問 {item.id}
+                                        </span>
+                                        <p className="text-lg text-neutral-800 font-light">{item.question}</p>
+                                    </div>
+                                    <div className="grid grid-cols-5 gap-2">
+                                        {[
+                                            { label: 'なし', value: 1, color: 'emerald' },
+                                            { label: '軽い', value: 2, color: 'green' },
+                                            { label: '中等度', value: 3, color: 'yellow' },
+                                            { label: '重い', value: 4, color: 'orange' },
+                                            { label: '非常に重い', value: 5, color: 'red' }
+                                        ].map((option) => (
+                                            <button
+                                                key={option.value}
+                                                className="bg-white border-2 border-neutral-200 hover:border-blue-400 hover:bg-blue-50 rounded-lg py-3 px-2 transition-all text-center"
+                                            >
+                                                <div className="font-medium text-neutral-700 text-sm">{option.label}</div>
+                                                <div className="text-xs text-neutral-500 mt-1">{option.value}点</div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* スコア計算ボタン */}
+                        <div className="bg-white rounded-3xl p-8 shadow-sm text-center mb-12">
+                            <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-12 py-4 rounded-full text-lg font-medium hover:shadow-lg transition-all">
+                                スコアを計算する
+                            </button>
+                            <p className="text-sm text-neutral-500 mt-4 font-light">
+                                ※ このデモでは実際の計算は行われません
+                            </p>
+                        </div>
+
+                        {/* スコア判定基準 */}
+                        <div className="bg-white rounded-3xl p-10 border border-neutral-200">
+                            <h3 className="text-2xl font-medium text-neutral-900 mb-8">スコア判定基準</h3>
+                            <div className="grid grid-cols-4 gap-4">
+                                <div className="bg-emerald-100 rounded-2xl p-6 text-center border border-emerald-300">
+                                    <p className="text-3xl font-light text-emerald-700 mb-2">17-26</p>
+                                    <p className="text-neutral-700 font-light">症状なし</p>
+                                </div>
+                                <div className="bg-yellow-100 rounded-2xl p-6 text-center border border-yellow-300">
+                                    <p className="text-3xl font-light text-yellow-700 mb-2">27-36</p>
+                                    <p className="text-neutral-700 font-light">軽度</p>
+                                </div>
+                                <div className="bg-orange-100 rounded-2xl p-6 text-center border border-orange-300">
+                                    <p className="text-3xl font-light text-orange-700 mb-2">37-49</p>
+                                    <p className="text-neutral-700 font-light">中等度</p>
+                                </div>
+                                <div className="bg-rose-100 rounded-2xl p-6 text-center border border-rose-300">
+                                    <p className="text-3xl font-light text-rose-700 mb-2">50+</p>
+                                    <p className="text-neutral-700 font-light">重度</p>
+                                </div>
+                            </div>
+                            <div className="mt-6 bg-neutral-50 rounded-xl p-4">
+                                <p className="text-sm text-neutral-600 font-light">
+                                    各質問の点数（1-5点）を合計し、17-85点の範囲で評価されます。
+                                    スコアが高いほど、症状が重いことを示します。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            // スクリーニング結果ページ
+            const ScreeningPage = () => (
+                <div className="min-h-screen bg-neutral-50">
+                    <div className="max-w-5xl mx-auto px-8 py-12">
+                        <button 
+                            onClick={() => setCurrentPage('home')}
+                            className="flex items-center text-neutral-600 hover:text-neutral-900 mb-12 transition-colors group"
+                        >
+                            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+                            <span className="font-light">戻る</span>
+                        </button>
+
+                        {/* ヘッダー */}
+                        <div className="text-center mb-16">
+                            <p className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-4">Your Health Report</p>
+                            <h1 className="text-5xl font-light text-neutral-900 mb-6 tracking-tight">総合スクリーニング結果</h1>
+                            <p className="text-xl text-neutral-600 font-light">血液検査とAMSスコアから読み解く、あなたの健康状態</p>
+                        </div>
+
+                        {/* 総合評価カード */}
+                        <div className="bg-gradient-to-br from-amber-500 to-orange-400 rounded-3xl p-12 mb-12 text-white text-center shadow-xl">
+                            <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
+                                <p className="text-sm font-medium tracking-wider uppercase">Overall Assessment</p>
+                            </div>
+                            <h2 className="text-4xl font-light mb-3">中等度の注意が必要</h2>
+                            <p className="text-xl font-light text-white/90">専門医への相談をおすすめします</p>
+                        </div>
+
+                        {/* 結果セクション */}
+                        <div className="grid grid-cols-2 gap-8 mb-12">
+                            {/* 血液検査 */}
+                            <div className="bg-white rounded-3xl p-8 shadow-sm">
+                                <div className="flex items-center mb-8">
+                                    <div className="w-12 h-12 bg-rose-100 rounded-2xl flex items-center justify-center mr-4">
+                                        <TestTube className="w-6 h-6 text-rose-600" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-medium text-neutral-900">血液検査</h3>
+                                        <p className="text-sm text-neutral-500 font-light">Hormone Levels</p>
+                                    </div>
+                                </div>
+                                
+                                <div className="space-y-6">
+                                    <div className="border-b border-neutral-100 pb-6">
+                                        <div className="flex justify-between items-baseline mb-3">
+                                            <span className="text-neutral-700 font-light">総テストステロン</span>
+                                            <div className="text-right">
+                                                <span className="text-2xl font-medium text-rose-600">2.8</span>
+                                                <span className="text-sm text-neutral-500 ml-1">ng/mL</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-rose-400 to-rose-600 rounded-full" style={{width: '35%'}}></div>
+                                        </div>
+                                        <div className="flex justify-between mt-2">
+                                            <span className="text-xs text-neutral-400 font-light">基準値: 3.0-8.5</span>
+                                            <span className="text-xs text-rose-600 font-medium">基準値以下</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="border-b border-neutral-100 pb-6">
+                                        <div className="flex justify-between items-baseline mb-3">
+                                            <span className="text-neutral-700 font-light">遊離テストステロン</span>
+                                            <div className="text-right">
+                                                <span className="text-2xl font-medium text-orange-600">6.5</span>
+                                                <span className="text-sm text-neutral-500 ml-1">pg/mL</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" style={{width: '45%'}}></div>
+                                        </div>
+                                        <div className="flex justify-between mt-2">
+                                            <span className="text-xs text-neutral-400 font-light">基準値: 8.5-27.9</span>
+                                            <span className="text-xs text-orange-600 font-medium">やや低値</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between items-baseline mb-3">
+                                            <span className="text-neutral-700 font-light">DHEA-S</span>
+                                            <div className="text-right">
+                                                <span className="text-2xl font-medium text-emerald-600">145</span>
+                                                <span className="text-sm text-neutral-500 ml-1">μg/dL</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full" style={{width: '70%'}}></div>
+                                        </div>
+                                        <div className="flex justify-between mt-2">
+                                            <span className="text-xs text-neutral-400 font-light">基準値: 80-560</span>
+                                            <span className="text-xs text-emerald-600 font-medium">正常範囲</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* AMSスコア */}
+                            <div className="bg-white rounded-3xl p-8 shadow-sm">
+                                <div className="flex items-center mb-8">
+                                    <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mr-4">
+                                        <ClipboardCheck className="w-6 h-6 text-emerald-600" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-medium text-neutral-900">AMSスコア</h3>
+                                        <p className="text-sm text-neutral-500 font-light">Symptom Assessment</p>
+                                    </div>
+                                </div>
+
+                                <div className="text-center mb-8 py-8 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl">
+                                    <p className="text-sm text-neutral-500 font-light mb-2">総合スコア</p>
+                                    <p className="text-7xl font-light text-orange-600 mb-2">42</p>
+                                    <p className="text-lg font-medium text-orange-600">中等度</p>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div>
+                                        <div className="flex justify-between mb-2">
+                                            <span className="text-sm text-neutral-600 font-light">心理的症状</span>
+                                            <span className="text-sm font-medium text-orange-600">18点</span>
+                                        </div>
+                                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" style={{width: '60%'}}></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between mb-2">
+                                            <span className="text-sm text-neutral-600 font-light">身体的症状</span>
+                                            <span className="text-sm font-medium text-yellow-600">15点</span>
+                                        </div>
+                                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full" style={{width: '50%'}}></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between mb-2">
+                                            <span className="text-sm text-neutral-600 font-light">性機能症状</span>
+                                            <span className="text-sm font-medium text-rose-600">9点</span>
+                                        </div>
+                                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-rose-400 to-rose-600 rounded-full" style={{width: '70%'}}></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 統合解釈 */}
+                        <div className="bg-white rounded-3xl p-10 mb-12 border border-neutral-200">
+                            <h3 className="text-2xl font-medium text-neutral-900 mb-6 flex items-center">
+                                <span className="text-3xl mr-4">💡</span>
+                                統合的な解釈
+                            </h3>
+                            <p className="text-neutral-600 leading-relaxed font-light text-lg mb-6">
+                                血液検査では総テストステロン値が基準値を下回り、遊離テストステロンもやや低値を示しています。
+                                同時に、AMSスコアでは42点の中等度評価となっており、特に心理的症状と性機能症状が高い傾向にあります。
+                            </p>
+                            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
+                                <p className="text-neutral-700 font-light text-lg leading-relaxed">
+                                    これらの結果から、<span className="font-medium text-amber-700">男性更年期障害（LOH症候群）の可能性</span>が示唆されます。
+                                    専門医による詳細な診断と、適切なケアプランの検討をおすすめします。
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* 次のステップ */}
+                        <div className="grid grid-cols-3 gap-6">
+                            <div 
+                                onClick={() => setCurrentPage('selfcare')}
+                                className="bg-white rounded-3xl p-8 cursor-pointer hover:shadow-xl transition-all duration-500 group"
+                            >
+                                <div className="w-16 h-16 bg-violet-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                    <Pill className="w-8 h-8 text-violet-600" />
+                                </div>
+                                <h4 className="text-xl font-medium text-neutral-900 mb-2">セルフケア</h4>
+                                <p className="text-neutral-600 font-light text-sm mb-4">生活習慣の改善から始める</p>
+                                <div className="flex items-center text-neutral-900 font-medium group-hover:translate-x-2 transition-transform">
+                                    <span className="text-sm">詳しく見る</span>
+                                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div 
+                                onClick={() => setCurrentPage('online')}
+                                className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-8 cursor-pointer hover:shadow-xl transition-all duration-500 group"
+                            >
+                                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                    <Calendar className="w-8 h-8 text-white" />
+                                </div>
+                                <h4 className="text-xl font-medium text-white mb-2">専門医に相談</h4>
+                                <p className="text-blue-100 font-light text-sm mb-4">オンライン診療で詳しく</p>
+                                <div className="flex items-center text-white font-medium group-hover:translate-x-2 transition-transform">
+                                    <span className="text-sm">予約する</span>
+                                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div className="bg-neutral-100 rounded-3xl p-8">
+                                <div className="w-16 h-16 bg-neutral-200 rounded-2xl flex items-center justify-center mb-6">
+                                    <TestTube className="w-8 h-8 text-neutral-500" />
+                                </div>
+                                <h4 className="text-xl font-medium text-neutral-900 mb-2">経過観察</h4>
+                                <p className="text-neutral-600 font-light text-sm">3ヶ月後の再検査を推奨</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            // セルフケアページ（簡略版）
+            const SelfcarePage = () => (
+                <div className="min-h-screen bg-neutral-50">
+                    <div className="max-w-5xl mx-auto px-8 py-12">
+                        <button 
+                            onClick={() => setCurrentPage('home')}
+                            className="flex items-center text-neutral-600 hover:text-neutral-900 mb-12 transition-colors group"
+                        >
+                            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+                            <span className="font-light">戻る</span>
+                        </button>
+
+                        <div className="text-center mb-16">
+                            <p className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-4">Self Care</p>
+                            <h1 className="text-5xl font-light text-neutral-900 mb-6 tracking-tight">セルフメディケーション</h1>
+                            <p className="text-xl text-neutral-600 font-light">あなたに合わせた、生活改善プラン</p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-8 mb-12">
+                            <div className="bg-white rounded-3xl p-10">
+                                <div className="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mb-6">
+                                    <span className="text-3xl">🧘</span>
+                                </div>
+                                <h3 className="text-2xl font-medium text-neutral-900 mb-4">生活習慣の改善</h3>
+                                <div className="space-y-4 text-neutral-600 font-light">
+                                    <p>• 規則正しい睡眠サイクル</p>
+                                    <p>• バランスの取れた食事</p>
+                                    <p>• ストレスマネジメント</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-10">
+                                <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6">
+                                    <span className="text-3xl">💪</span>
+                                </div>
+                                <h3 className="text-2xl font-medium text-neutral-900 mb-4">運動療法</h3>
+                                <div className="space-y-4 text-neutral-600 font-light">
+                                    <p>• 筋力トレーニング（週2-3回）</p>
+                                    <p>• 有酸素運動の習慣化</p>
+                                    <p>• 無理のない継続性</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-3xl p-10 border border-neutral-200">
+                            <h3 className="text-2xl font-medium text-neutral-900 mb-8">推奨サプリメント</h3>
+                            <div className="grid grid-cols-4 gap-6">
+                                {[
+                                    {emoji: '⚡', name: '亜鉛', desc: 'テストステロン産生'},
+                                    {emoji: '☀️', name: 'ビタミンD', desc: 'ホルモンバランス'},
+                                    {emoji: '🌿', name: 'マカ', desc: '活力向上'},
+                                    {emoji: '💊', name: 'DHEA', desc: 'ホルモン前駆体'}
+                                ].map((item, idx) => (
+                                    <div key={idx} className="text-center">
+                                        <div className="w-16 h-16 bg-neutral-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                            <span className="text-3xl">{item.emoji}</span>
+                                        </div>
+                                        <p className="text-neutral-900 font-medium mb-1">{item.name}</p>
+                                        <p className="text-neutral-600 text-sm font-light">{item.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <p className="text-neutral-500 text-sm text-center mt-8 font-light">※ サプリメントの使用前には必ず医師にご相談ください</p>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            // オンライン診療ページ（簡略版）
+            const OnlinePage = () => (
+                <div className="min-h-screen bg-neutral-50">
+                    <div className="max-w-5xl mx-auto px-8 py-12">
+                        <button 
+                            onClick={() => setCurrentPage('home')}
+                            className="flex items-center text-neutral-600 hover:text-neutral-900 mb-12 transition-colors group"
+                        >
+                            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+                            <span className="font-light">戻る</span>
+                        </button>
+
+                        <div className="text-center mb-16">
+                            <p className="text-sm font-medium tracking-wider text-neutral-500 uppercase mb-4">Online Consultation</p>
+                            <h1 className="text-5xl font-light text-neutral-900 mb-6 tracking-tight">オンライン診療</h1>
+                            <p className="text-xl text-neutral-600 font-light">専門医と、どこからでも繋がる</p>
+                        </div>
+
+                        <div className="bg-white rounded-3xl p-12 mb-12 shadow-sm">
+                            <h3 className="text-2xl font-medium text-neutral-900 mb-8 text-center">診療の流れ</h3>
+                            <div className="grid grid-cols-4 gap-8">
+                                {[
+                                    {num: '01', title: '予約', desc: '希望日時を選択'},
+                                    {num: '02', title: '問診票', desc: '検査結果を入力'},
+                                    {num: '03', title: '診察', desc: 'ビデオ通話で相談'},
+                                    {num: '04', title: '処方', desc: '薬は自宅に配送'}
+                                ].map((step, idx) => (
+                                    <div key={idx} className="text-center">
+                                        <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                            <span className="text-white font-light text-lg">{step.num}</span>
+                                        </div>
+                                        <h4 className="text-lg font-medium text-neutral-900 mb-2">{step.title}</h4>
+                                        <p className="text-neutral-600 font-light text-sm">{step.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-8">
+                            <div className="bg-blue-500 rounded-3xl p-10 text-white">
+                                <h3 className="text-2xl font-light mb-6">対応可能な治療</h3>
+                                <div className="space-y-3 text-blue-50 font-light">
+                                    <p>• テストステロン補充療法（TRT）</p>
+                                    <p>• 漢方薬処方</p>
+                                    <p>• 生活習慣指導</p>
+                                    <p>• メンタルケア</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-10 shadow-sm">
+                                <h3 className="text-2xl font-medium text-neutral-900 mb-6">診療料金</h3>
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center pb-4 border-b border-neutral-100">
+                                        <span className="text-neutral-600 font-light">初診（30分）</span>
+                                        <span className="text-2xl font-light text-neutral-900">¥8,000</span>
+                                    </div>
+                                    <div className="flex justify-between items-center pb-4 border-b border-neutral-100">
+                                        <span className="text-neutral-600 font-light">再診（15分）</span>
+                                        <span className="text-2xl font-light text-neutral-900">¥4,000</span>
+                                    </div>
+                                    <p className="text-neutral-500 text-sm font-light pt-2">※ 薬代・配送料は別途</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div>
+                    {currentPage === 'home' && <HomePage />}
+                    {currentPage === 'tasso' && <TassoPage />}
+                    {currentPage === 'ams' && <AmsPage />}
+                    {currentPage === 'screening' && <ScreeningPage />}
+                    {currentPage === 'selfcare' && <SelfcarePage />}
+                    {currentPage === 'online' && <OnlinePage />}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<MensHealthDemo />);
+    </script>
+</body>
+</html>
